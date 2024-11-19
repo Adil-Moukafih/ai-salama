@@ -1,0 +1,597 @@
+<html class="size-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://kit.fontawesome.com/0d11f7e939.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+  .glass-effect {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .glow {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+
+  .alert-glow-red {
+    animation: glowRed 2s infinite;
+  }
+
+  .alert-glow-yellow {
+    animation: glowYellow 2s infinite;
+  }
+
+  @keyframes glowRed {
+    0%, 100% { box-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.8); }
+  }
+
+  @keyframes glowYellow {
+    0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+  }
+
+  .hover-scale {
+    transition: transform 0.2s;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans leading-normal tracking-normal h-screen flex flex-col">
+  <!-- Header -->
+  <header class="glass-effect p-4 shadow-lg border-b border-gray-700">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <div class="bg-blue-600 rounded-lg p-2 glow">
+            <i class="fas fa-shield-alt text-xl"></i>
+          </div>
+          <h1 class="text-xl font-bold ml-3">SALAMA Dashboard</h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-2 ml-8">
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-clock mr-1"></i>Live
+          </button>
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-history mr-1"></i>24h
+          </button>
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-calendar-alt mr-1"></i>7d
+          </button>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-6">
+        <div class="flex items-center">
+          <span class="text-sm text-gray-400">System Health:</span>
+          <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            Excellent
+          </span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="p-2 hover:bg-gray-700 rounded-lg">
+            <i class="fas fa-bell text-gray-300"></i>
+          </button>
+          <button class="p-2 hover:bg-gray-700 rounded-lg">
+            <i class="fas fa-cog text-gray-300"></i>
+          </button>
+          <div class="flex items-center space-x-2">
+            <img class="h-8 w-8 rounded-full" src="https://www.tailwindai.dev/placeholder.svg" alt="Profile">
+            <div class="hidden md:block">
+              <p class="text-sm font-medium">Admin User</p>
+              <p class="text-xs text-gray-400">Security Level 1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <nav class="glass-effect w-20 md:w-64 border-r border-gray-700">
+      <div class="p-4">
+        <div class="space-y-2">
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-home text-lg"></i>
+            <span class="hidden md:inline">Dashboard</span>
+          </a> 
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-600 text-white">
+            <i class="fas fa-camera text-lg"></i>
+            <span class="hidden md:inline">Cameras</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-exclamation-triangle text-lg"></i>
+            <span class="hidden md:inline">Alerts</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-chart-line text-lg"></i>
+            <span class="hidden md:inline">Analytics</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-cog text-lg"></i>
+            <span class="hidden md:inline">Settings</span>
+          </a>
+        </div>
+
+        <!-- System Stats (Only visible on larger screens) -->
+        <div class="hidden md:block mt-8">
+          <h3 class="text-sm font-semibold px-4 mb-2">System Status</h3>
+          <div class="space-y-3">
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">CPU Usage</span>
+                <span class="text-green-400">28%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-green-500 h-1.5 rounded-full" style="width: 28%"></div>
+              </div>
+            </div>
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">Memory</span>
+                <span class="text-yellow-400">62%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 62%"></div>
+              </div>
+            </div>
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">Storage</span>
+                <span class="text-red-400">85%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-red-500 h-1.5 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-6">
+  <!-- Page Header with Search and Actions -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+    <div class="flex items-center space-x-4 mb-4 md:mb-0">
+      <h2 class="text-2xl font-semibold">Camera Management</h2>
+      <button class="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-500 flex items-center">
+        <i class="fas fa-plus mr-2"></i>
+        Add Camera
+      </button>
+    </div>
+    
+    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Search cameras..."
+          class="w-full md:w-64 px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+        />
+        <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+      </div>
+      
+      <div class="flex space-x-4">
+        <button class="px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 hover:bg-gray-700 flex items-center">
+          <i class="fas fa-filter mr-2"></i>
+          Filters
+        </button>
+        <div class="flex bg-gray-800 rounded-lg border border-gray-700">
+          <button class="px-4 py-2 rounded-l-lg flex items-center bg-gray-700">
+            <i class="fas fa-th mr-2"></i>
+            Grid
+          </button>
+          <button class="px-4 py-2 rounded-r-lg flex items-center">
+            <i class="fas fa-list mr-2"></i>
+            List
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+    <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-400">Total Cameras</p>
+          <h3 class="text-2xl font-bold mt-1">15</h3>
+          <p class="text-sm text-green-400 mt-1">
+            All operational
+          </p>
+        </div>
+        <div class="bg-blue-600/20 p-3 rounded-lg">
+          <i class="fas fa-camera text-blue-500 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-400">Stream Quality</p>
+          <h3 class="text-2xl font-bold mt-1">98.5%</h3>
+          <p class="text-sm text-green-400 mt-1">
+            Optimal
+          </p>
+        </div>
+        <div class="bg-green-600/20 p-3 rounded-lg">
+          <i class="fas fa-signal text-green-500 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-400">Detection Rate</p>
+          <h3 class="text-2xl font-bold mt-1">95.8%</h3>
+          <p class="text-sm text-green-400 mt-1">
+            Above threshold
+          </p>
+        </div>
+        <div class="bg-purple-600/20 p-3 rounded-lg">
+          <i class="fas fa-shield-alt text-purple-500 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-400">Active Alerts</p>
+          <h3 class="text-2xl font-bold mt-1">2</h3>
+          <p class="text-sm text-yellow-400 mt-1">
+            Requires attention
+          </p>
+        </div>
+        <div class="bg-yellow-600/20 p-3 rounded-lg">
+          <i class="fas fa-exclamation-triangle text-yellow-500 text-xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Grid -->
+  <div class="glass-effect rounded-xl border border-gray-700 p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Camera Card 1 -->
+      <div class="relative hover-scale">
+        <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+          <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+            Platform A
+          </span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+        </div>
+        <div class="relative rounded-lg overflow-hidden">
+          <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 1" class="w-full h-48 object-cover"/>
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+            <div class="flex justify-between items-end">
+              <div>
+                <h3 class="text-sm font-medium">Main Platform Camera</h3>
+                <p class="text-xs text-gray-400">Normal Operation</p>
+              </div>
+              <div class="flex space-x-2">
+                <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                  <i class="fas fa-expand text-xs"></i>
+                </button>
+                <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                  <i class="fas fa-cog text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Camera Card 2 -->
+      <div class="relative hover-scale">
+        <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+          <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+            Track B
+          </span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+        </div>
+        <div class="relative rounded-lg overflow-hidden alert-glow-yellow">
+          <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 2" class="w-full h-48 object-cover"/>
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+            <div class="flex justify-between items-end">
+              <div>
+                <h3 class="text-sm font-medium">Track Overview</h3>
+                <p class="text-xs text-yellow-400">Maintenance Required</p>
+              </div>
+              <div class="flex space-x-2">
+                <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                  <i class="fas fa-expand text-xs"></i>
+                </button>
+                <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                  <i class="fas fa-cog text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more camera cards as needed -->
+    </div>
+  </div>
+</main>
+
+<!-- Add Camera Modal -->
+<div id="addCameraModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <div class="glass-effect rounded-xl border border-gray-700 p-6 w-full max-w-2xl mx-4">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold">Add New Camera</h3>
+            <button onclick="toggleAddCameraModal()" class="text-gray-400 hover:text-gray-300">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Add Camera Form -->
+        <form id="addCameraForm" class="space-y-6">
+            <!-- Basic Information -->
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Camera Name</label>
+                        <input 
+                            type="text" 
+                            class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                            placeholder="Platform A Camera"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                        <input 
+                            type="text" 
+                            class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                            placeholder="Platform A"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">RTSP Stream URL</label>
+                    <input 
+                        type="url" 
+                        class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                        placeholder="rtsp://camera-ip:554/stream1"
+                        required
+                    />
+                </div>
+            </div>
+
+            <!-- Camera Settings -->
+            <div class="space-y-4">
+                <h4 class="text-md font-medium text-gray-300">Camera Settings</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Resolution</label>
+                        <select class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500">
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Frame Rate</label>
+                        <select class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500">
+                            <option value="30">30 fps</option>
+                            <option value="25">25 fps</option>
+                            <option value="15">15 fps</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Detection Zones</label>
+                    <div class="bg-gray-800 rounded-lg border border-gray-700 p-4">
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-700 bg-gray-800">
+                                <span class="ml-2 text-sm text-gray-300">Platform Edge</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-700 bg-gray-800">
+                                <span class="ml-2 text-sm text-gray-300">Track Area</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-700 bg-gray-800">
+                                <span class="ml-2 text-sm text-gray-300">Waiting Area</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Settings -->
+            <div class="space-y-4">
+                <h4 class="text-md font-medium text-gray-300">Alert Settings</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Alert Sensitivity</label>
+                        <select class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Alert Recipients</label>
+                        <input 
+                            type="email" 
+                            class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
+                            placeholder="email@example.com"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4 pt-4 border-t border-gray-700">
+                <button
+                    type="button"
+                    onclick="toggleAddCameraModal()"
+                    class="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
+                >
+                    Add Camera
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add this JavaScript just before closing body tag -->
+<script>
+function toggleAddCameraModal() {
+    const modal = document.getElementById('addCameraModal');
+    modal.classList.toggle('hidden');
+}
+
+// Add event listener to the Add Camera button
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.querySelector('button:has(.fa-plus)') || document.querySelector('button:has(.fas.fa-plus)');
+    if (addButton) {
+        addButton.addEventListener('click', toggleAddCameraModal);
+    }
+
+    // Handle form submission
+    const form = document.getElementById('addCameraForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send the data to your backend
+        console.log('Form submitted');
+        // Add your form submission logic here
+        
+        // For demo purposes, just close the modal
+        toggleAddCameraModal();
+        
+        // Show success message
+        alert('Camera added successfully!');
+    });
+});
+</script>
+
+<!-- Add this CSS in your style section -->
+<style>
+.form-checkbox {
+    appearance: none;
+    padding: 0;
+    print-color-adjust: exact;
+    display: inline-block;
+    vertical-align: middle;
+    background-origin: border-box;
+    user-select: none;
+    flex-shrink: 0;
+    height: 1rem;
+    width: 1rem;
+    background-color: #1F2937;
+    border: 1px solid #4B5563;
+    border-radius: 0.25rem;
+}
+
+.form-checkbox:checked {
+    background-color: #2563EB;
+    border-color: #2563EB;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+
+.form-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+</style>
+
+      <!-- Initialize Performance Chart -->
+      <script>
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+          type: 'line',
+          data: {
+            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+            datasets: [
+              {
+                label: 'YOLOv5',
+                data: [95, 94, 96, 95, 97, 95],
+                borderColor: '#10B981',
+                tension: 0.4,
+                fill: false
+              },
+              {
+                label: 'LLaMA',
+                data: [93, 94, 92, 95, 94, 93],
+                borderColor: '#3B82F6',
+                tension: 0.4,
+                fill: false
+              },
+              {
+                label: 'Alert System',
+                data: [96, 95, 97, 96, 96, 97],
+                borderColor: '#8B5CF6',
+                tension: 0.4,
+                fill: false
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                  color: '#9CA3AF',
+                  font: {
+                    size: 11
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                min: 90,
+                max: 100,
+                ticks: {
+                  color: '#9CA3AF'
+                },
+                grid: {
+                  color: '#374151'
+                }
+              },
+              x: {
+                ticks: {
+                  color: '#9CA3AF'
+                },
+                grid: {
+                  color: '#374151'
+                }
+              }
+            }
+          }
+        });
+      </script>
+      </body>
+</html>

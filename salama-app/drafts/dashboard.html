@@ -1,0 +1,752 @@
+<html class="size-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://kit.fontawesome.com/0d11f7e939.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+  .glass-effect {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .glow {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+
+  .alert-glow-red {
+    animation: glowRed 2s infinite;
+  }
+
+  .alert-glow-yellow {
+    animation: glowYellow 2s infinite;
+  }
+
+  @keyframes glowRed {
+    0%, 100% { box-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.8); }
+  }
+
+  @keyframes glowYellow {
+    0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+  }
+
+  .hover-scale {
+    transition: transform 0.2s;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans leading-normal tracking-normal h-screen flex flex-col">
+  <!-- Header -->
+  <header class="glass-effect p-4 shadow-lg border-b border-gray-700">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <div class="bg-blue-600 rounded-lg p-2 glow">
+            <i class="fas fa-shield-alt text-xl"></i>
+          </div>
+          <h1 class="text-xl font-bold ml-3">SALAMA Dashboard</h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-2 ml-8">
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-clock mr-1"></i>Live
+          </button>
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-history mr-1"></i>24h
+          </button>
+          <button class="px-3 py-1 rounded-full bg-gray-700 hover:bg-gray-600 text-sm">
+            <i class="fas fa-calendar-alt mr-1"></i>7d
+          </button>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-6">
+        <div class="flex items-center">
+          <span class="text-sm text-gray-400">System Health:</span>
+          <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            Excellent
+          </span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="p-2 hover:bg-gray-700 rounded-lg">
+            <i class="fas fa-bell text-gray-300"></i>
+          </button>
+          <button class="p-2 hover:bg-gray-700 rounded-lg">
+            <i class="fas fa-cog text-gray-300"></i>
+          </button>
+          <div class="flex items-center space-x-2">
+            <img class="h-8 w-8 rounded-full" src="https://www.tailwindai.dev/placeholder.svg" alt="Profile">
+            <div class="hidden md:block">
+              <p class="text-sm font-medium">Admin User</p>
+              <p class="text-xs text-gray-400">Security Level 1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <nav class="glass-effect w-20 md:w-64 border-r border-gray-700">
+      <div class="p-4">
+        <div class="space-y-2">
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-600 text-white">
+            <i class="fas fa-home text-lg"></i>
+            <span class="hidden md:inline">Dashboard</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-camera text-lg"></i>
+            <span class="hidden md:inline">Cameras</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-exclamation-triangle text-lg"></i>
+            <span class="hidden md:inline">Alerts</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-chart-line text-lg"></i>
+            <span class="hidden md:inline">Analytics</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-700">
+            <i class="fas fa-cog text-lg"></i>
+            <span class="hidden md:inline">Settings</span>
+          </a>
+        </div>
+
+        <!-- System Stats (Only visible on larger screens) -->
+        <div class="hidden md:block mt-8">
+          <h3 class="text-sm font-semibold px-4 mb-2">System Status</h3>
+          <div class="space-y-3">
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">CPU Usage</span>
+                <span class="text-green-400">28%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-green-500 h-1.5 rounded-full" style="width: 28%"></div>
+              </div>
+            </div>
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">Memory</span>
+                <span class="text-yellow-400">62%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 62%"></div>
+              </div>
+            </div>
+            <div class="px-4">
+              <div class="flex justify-between items-center text-sm mb-1">
+                <span class="text-gray-400">Storage</span>
+                <span class="text-red-400">85%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-red-500 h-1.5 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Total Alerts Today</p>
+              <h3 class="text-2xl font-bold mt-1">247</h3>
+              <p class="text-sm text-green-400 mt-1">
+                <i class="fas fa-arrow-up mr-1"></i>12% vs yesterday
+              </p>
+            </div>
+            <div class="bg-blue-600/20 p-3 rounded-lg">
+              <i class="fas fa-bell text-blue-500 text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Active Cameras</p>
+              <h3 class="text-2xl font-bold mt-1">14/15</h3>
+              <p class="text-sm text-green-400 mt-1">
+                <i class="fas fa-check-circle mr-1"></i>93.3% uptime
+              </p>
+            </div>
+            <div class="bg-green-600/20 p-3 rounded-lg">
+              <i class="fas fa-camera text-green-500 text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-400">Response Time</p>
+              <h3 class="text-2xl font-bold mt-1">1.8s</h3>
+              <p class="text-sm text-yellow-400 mt-1">
+                <i class="fas fa-clock mr-1"></i>Average
+              </p>
+            </div>
+            <div class="bg-yellow-600/20 p-3 rounded-lg">
+              <i class="fas fa-bolt text-yellow-500 text-xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-effect p-6 rounded-xl hover-scale border border-gray-700">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-400">AI Accuracy</p>
+              <h3 class="text-2xl font-bold mt-1">95.8%</h3>
+              <p class="text-sm text-green-400 mt-1">
+                <i class="fas fa-arrow-up mr-1"></i>2.3% improvement
+              </p>
+            </div>
+            <div class="bg-purple-600/20 p-3 rounded-lg">
+              <i class="fas fa-brain text-purple-500 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Camera Grid and Alert Panel Layout -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+        <!-- Camera Grid Section (spans 2 columns) -->
+        <div class="xl:col-span-2 glass-effect rounded-xl border border-gray-700 p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-semibold">Live Camera Feeds</h2>
+            <div class="flex items-center space-x-3">
+              <button class="text-sm px-3 py-1.5 bg-gray-700 rounded-lg hover:bg-gray-600">
+                <i class="fas fa-th text-gray-300 mr-2"></i>Grid View
+              </button>
+              <button class="text-sm px-3 py-1.5 bg-gray-700 rounded-lg hover:bg-gray-600">
+                <i class="fas fa-list text-gray-300 mr-2"></i>List View
+              </button>
+            </div>
+          </div>
+
+          <!-- Camera Grid -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Camera 1 - Critical Alert -->
+            <div class="relative hover-scale">
+              <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+                <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">Platform A</span>
+                <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              </div>
+              <div class="relative rounded-lg overflow-hidden alert-glow-red">
+                <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 1" class="w-full h-48 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <div class="flex justify-between items-end">
+                    <div>
+                      <h3 class="text-sm font-medium">Platform Edge Camera</h3>
+                      <p class="text-xs text-red-400">Critical Alert: Person too close to edge</p>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-expand text-xs"></i>
+                      </button>
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-cog text-xs"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- AI Detection Overlay -->
+                <div class="absolute inset-0">
+                  <svg class="w-full h-full">
+                    <rect x="30%" y="60%" width="20%" height="30%" stroke="red" stroke-width="2" fill="none" stroke-dasharray="5,5" class="animate-pulse"/>
+                    <text x="31%" y="58%" fill="red" class="text-xs">Person Detected</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Camera 2 - Warning Alert -->
+            <div class="relative hover-scale">
+              <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+                <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">Track B</span>
+                <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-yellow-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+              </div>
+              <div class="relative rounded-lg overflow-hidden alert-glow-yellow">
+                <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 2" class="w-full h-48 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <div class="flex justify-between items-end">
+                    <div>
+                      <h3 class="text-sm font-medium">Track Monitoring</h3>
+                      <p class="text-xs text-yellow-400">Warning: Object detected on track</p>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-expand text-xs"></i>
+                      </button>
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-cog text-xs"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- AI Detection Overlay -->
+                <div class="absolute inset-0">
+                  <svg class="w-full h-full">
+                    <rect x="40%" y="70%" width="15%" height="15%" stroke="yellow" stroke-width="2" fill="none" stroke-dasharray="5,5" class="animate-pulse"/>
+                    <text x="41%" y="68%" fill="yellow" class="text-xs">Object Detected</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Camera 3 - Normal -->
+            <div class="relative hover-scale">
+              <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+                <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">Platform C</span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              </div>
+              <div class="relative rounded-lg overflow-hidden">
+                <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 3" class="w-full h-48 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <div class="flex justify-between items-end">
+                    <div>
+                      <h3 class="text-sm font-medium">Waiting Area</h3>
+                      <p class="text-xs text-gray-400">Normal Operation</p>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-expand text-xs"></i>
+                      </button>
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-cog text-xs"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Camera 4 - Normal -->
+            <div class="relative hover-scale">
+              <div class="absolute top-3 left-3 z-10 flex items-center space-x-2">
+                <span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">Track D</span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              </div>
+              <div class="relative rounded-lg overflow-hidden">
+                <img src="https://www.tailwindai.dev/placeholder.svg" alt="Camera Feed 4" class="w-full h-48 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <div class="flex justify-between items-end">
+                    <div>
+                      <h3 class="text-sm font-medium">Track Overview</h3>
+                      <p class="text-xs text-gray-400">Normal Operation</p>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-expand text-xs"></i>
+                      </button>
+                      <button class="p-1.5 bg-gray-800/50 rounded-lg hover:bg-gray-700">
+                        <i class="fas fa-cog text-xs"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert Panel -->
+        <div class="glass-effect rounded-xl border border-gray-700 p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-semibold">Active Alerts</h2>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-gray-400">Auto-refresh:</span>
+              <button class="text-xs px-2 py-1 bg-blue-600 rounded">ON</button>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Critical Alert -->
+            <div class="bg-gray-800/50 rounded-lg p-4 border-l-4 border-red-500 hover-scale">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-red-500 text-xs font-semibold">CRITICAL</span>
+                    <span class="text-gray-400 text-xs">2 mins ago</span>
+                  </div>
+                  <h3 class="font-medium mt-1">Platform Edge Violation</h3>
+                  <p class="text-sm text-gray-400 mt-1">Person detected in danger zone</p>
+                </div>
+                <div class="flex flex-col items-end">
+                  <span class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
+                    Platform A
+                  </span>
+                  <button class="mt-2 text-xs text-blue-400 hover:text-blue-300">
+                    View Details
+                  </button>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center space-x-3">
+                <button class="text-xs px-3 py-1 bg-green-600 rounded-lg hover:bg-green-500">
+                  Acknowledge
+                </button>
+                <button class="text-xs px-3 py-1 bg-blue-600 rounded-lg hover:bg-blue-500">
+                  Dispatch Security
+                </button>
+              </div>
+            </div>
+
+            <!-- Warning Alert -->
+            <div class="bg-gray-800/50 rounded-lg p-4 border-l-4 border-yellow-500 hover-scale">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-yellow-500 text-xs font-semibold">WARNING</span>
+                    <span class="text-gray-400 text-xs">5 mins ago</span>
+                  </div>
+                  <h3 class="font-medium mt-1">Track Obstruction</h3>
+                  <p class="text-sm text-gray-400 mt-1">Object detected on track</p>
+                </div>
+                <div class="flex flex-col items-end">
+                  <span class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full">
+                    Track B
+                  </span>
+                  <button class="mt-2 text-xs text-blue-400 hover:text-blue-300">
+                    View Details
+                  </button>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center space-x-3">
+                <button class="text-xs px-3 py-1 bg-green-600 rounded-lg hover:bg-green-500">
+                  Acknowledge
+                </button>
+                <button class="text-xs px-3 py-1 bg-blue-600 rounded-lg hover:bg-blue-500">
+                  Dispatch Maintenance
+                </button>
+              </div>
+            </div>
+
+            <!-- Info Alert -->
+            <div class="bg-gray-800/50 rounded-lg p-4 border-l-4 border-blue-500 hover-scale">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-blue-500 text-xs font-semibold">INFO</span>
+                    <span class="text-gray-400 text-xs">15 mins ago</span>
+                  </div>
+                  <h3 class="font-medium mt-1">Increased Passenger Flow</h3>
+                  <p class="text-sm text-gray-400 mt-1">Above average platform occupancy</p>
+                </div>
+                <div class="flex flex-col items-end">
+                  <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">
+                    Platform C
+                  </span>
+                  <button class="mt-2 text-xs text-blue-400 hover:text-blue-300">
+                    View Details
+                  </button>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center space-x-3">
+                <button class="text-xs px-3 py-1 bg-green-600 rounded-lg hover:bg-green-500">
+                  Monitor
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Analytics Section -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <!-- AI Performance Metrics -->
+        <div class="xl:col-span-2 glass-effect rounded-xl border border-gray-700 p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-semibold">AI System Performance</h2>
+            <div class="flex items-center space-x-3">
+              <select class="text-sm px-3 py-1.5 bg-gray-700 rounded-lg">
+                <option>Last 24 Hours</option>
+                <option>Last 7 Days</option>
+                <option>Last 30 Days</option>
+              </select>
+              <button class="text-sm px-3 py-1.5 bg-gray-700 rounded-lg hover:bg-gray-600">
+                <i class="fas fa-download text-gray-300 mr-2"></i>Export
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <!-- YOLOv5 Performance -->
+            <div class="bg-gray-800/50 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-medium">YOLOv5 Detection</h3>
+                <span class="text-green-400 text-sm">95.8%</span>
+              </div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Accuracy</span>
+                    <span class="text-gray-300">98%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-green-500 h-1 rounded-full animate-pulse" style="width: 98%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Speed</span>
+                    <span class="text-gray-300">45ms</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-blue-500 h-1 rounded-full" style="width: 92%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Precision</span>
+                    <span class="text-gray-300">96%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-purple-500 h-1 rounded-full" style="width: 96%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LLaMA Analysis -->
+            <div class="bg-gray-800/50 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-medium">LLaMA Analysis</h3>
+                <span class="text-green-400 text-sm">94.2%</span>
+              </div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Context Score</span>
+                    <span class="text-gray-300">95%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-green-500 h-1 rounded-full animate-pulse" style="width: 95%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Response Time</span>
+                    <span class="text-gray-300">120ms</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-blue-500 h-1 rounded-full" style="width: 88%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Reliability</span>
+                    <span class="text-gray-300">94%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-purple-500 h-1 rounded-full" style="width: 94%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Alert Generation -->
+            <div class="bg-gray-800/50 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-medium">Alert System</h3>
+                <span class="text-green-400 text-sm">96.5%</span>
+              </div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Accuracy</span>
+                    <span class="text-gray-300">97%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-green-500 h-1 rounded-full animate-pulse" style="width: 97%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Latency</span>
+                    <span class="text-gray-300">80ms</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-blue-500 h-1 rounded-full" style="width: 95%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">False Positives</span>
+                    <span class="text-gray-300">3.5%</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1">
+                    <div class="bg-purple-500 h-1 rounded-full" style="width: 96.5%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Chart -->
+          <div class="h-[300px]">
+            <canvas id="performanceChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Activity Feed -->
+        <div class="glass-effect rounded-xl border border-gray-700 p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-semibold">System Activity</h2>
+            <button class="text-sm text-blue-400 hover:text-blue-300">View All</button>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Activity Timeline -->
+            <div class="relative">
+              <!-- Timeline Line -->
+              <div class="absolute left-2.5 top-0 h-full w-0.5 bg-gray-700"></div>
+
+              <!-- Activity Items -->
+              <div class="space-y-6">
+                <!-- Activity 1 -->
+                <div class="relative flex items-start">
+                  <div class="absolute left-0 mt-1.5">
+                    <div class="h-5 w-5 rounded-full border-2 border-red-500 bg-gray-900"></div>
+                  </div>
+                  <div class="ml-10">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-red-500 text-xs font-semibold">Critical Alert</span>
+                      <span class="text-gray-400 text-xs">2 mins ago</span>
+                    </div>
+                    <p class="text-sm mt-1">Platform edge violation detected at Platform A</p>
+                    <div class="flex items-center space-x-2 mt-1">
+                      <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">High Priority</span>
+                      <button class="text-xs text-blue-400 hover:text-blue-300">View Details</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="relative flex items-start">
+                  <div class="absolute left-0 mt-1.5">
+                    <div class="h-5 w-5 rounded-full border-2 border-green-500 bg-gray-900"></div>
+                  </div>
+                  <div class="ml-10">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-green-500 text-xs font-semibold">System Update</span>
+                      <span class="text-gray-400 text-xs">15 mins ago</span>
+                    </div>
+                    <p class="text-sm mt-1">AI model performance optimization completed</p>
+                    <div class="flex items-center space-x-2 mt-1">
+                      <span class="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Success</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="relative flex items-start">
+                  <div class="absolute left-0 mt-1.5">
+                    <div class="h-5 w-5 rounded-full border-2 border-yellow-500 bg-gray-900"></div>
+                  </div>
+                  <div class="ml-10">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-yellow-500 text-xs font-semibold">Maintenance</span>
+                      <span class="text-gray-400 text-xs">1 hour ago</span>
+                    </div>
+                    <p class="text-sm mt-1">Camera 3 diagnostic check scheduled</p>
+                    <div class="flex items-center space-x-2 mt-1">
+                      <span class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full">Pending</span>
+                      <button class="text-xs text-blue-400 hover:text-blue-300">View Schedule</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Initialize Performance Chart -->
+      <script>
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+          type: 'line',
+          data: {
+            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+            datasets: [
+              {
+                label: 'YOLOv5',
+                data: [95, 94, 96, 95, 97, 95],
+                borderColor: '#10B981',
+                tension: 0.4,
+                fill: false
+              },
+              {
+                label: 'LLaMA',
+                data: [93, 94, 92, 95, 94, 93],
+                borderColor: '#3B82F6',
+                tension: 0.4,
+                fill: false
+              },
+              {
+                label: 'Alert System',
+                data: [96, 95, 97, 96, 96, 97],
+                borderColor: '#8B5CF6',
+                tension: 0.4,
+                fill: false
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                  color: '#9CA3AF',
+                  font: {
+                    size: 11
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                min: 90,
+                max: 100,
+                ticks: {
+                  color: '#9CA3AF'
+                },
+                grid: {
+                  color: '#374151'
+                }
+              },
+              x: {
+                ticks: {
+                  color: '#9CA3AF'
+                },
+                grid: {
+                  color: '#374151'
+                }
+              }
+            }
+          }
+        });
+      </script>
+      </body>
+</html>

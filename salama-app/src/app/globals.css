@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Particles Container */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+#particles-js canvas {
+  display: block;
+  pointer-events: auto;
+}
+
+@layer base {
+  :root {
+    /* Light mode colors */
+    --color-primary: 59, 130, 246;    /* blue-500 */
+    --color-secondary: 99, 102, 241;  /* indigo-500 */
+    --color-success: 34, 197, 94;     /* green-500 */
+    --color-warning: 234, 179, 8;     /* yellow-500 */
+    --color-danger: 239, 68, 68;      /* red-500 */
+    --color-info: 6, 182, 212;        /* cyan-500 */
+
+    /* Light mode background colors */
+    --bg-primary: 255, 255, 255;      /* white */
+    --bg-secondary: 243, 244, 246;    /* gray-100 */
+    --bg-tertiary: 229, 231, 235;     /* gray-200 */
+
+    /* Light mode component colors */
+    --bg-sidebar: 249, 250, 251;      /* gray-50 */
+    --bg-header: 255, 255, 255;       /* white */
+    --bg-card: 249, 250, 251;         /* white */
+    --bg-hover: 243, 244, 246;        /* gray-100 */
+
+    /* Light mode text colors */
+    --text-primary: 17, 24, 39;       /* gray-900 */
+    --text-secondary: 75, 85, 99;     /* gray-600 */
+    --text-tertiary: 156, 163, 175;   /* gray-400 */
+
+    /* Light mode border colors */
+    --border-primary: 229, 231, 235;  /* gray-200 */
+    --border-secondary: 209, 213, 219;/* gray-300 */
+  }
+
+  [data-theme='dark'] {
+    /* Dark mode background colors */
+    --bg-primary: 17, 24, 39;         /* gray-900 */
+    --bg-secondary: 31, 41, 55;       /* gray-800 */
+    --bg-tertiary: 55, 65, 81;        /* gray-700 */
+
+    /* Dark mode component colors */
+    --bg-sidebar: 17, 24, 39;         /* gray-900 */
+    --bg-header: 31, 41, 55;          /* gray-800 */
+    --bg-card: 17, 24, 39;            /* gray-800 */
+    --bg-hover: 55, 65, 81;           /* gray-700 */
+
+    /* Dark mode text colors */
+    --text-primary: 255, 255, 255;    /* white */
+    --text-secondary: 209, 213, 219;  /* gray-300 */
+    --text-tertiary: 156, 163, 175;   /* gray-400 */
+
+    /* Dark mode border colors */
+    --border-primary: 55, 65, 81;     /* gray-700 */
+    --border-secondary: 75, 85, 99;   /* gray-600 */
+  }
+}
+
+@layer components {
+  /* Component classes */
+  .bg-app {
+    @apply bg-gradient-to-br from-[rgb(var(--bg-primary))] to-[rgb(var(--bg-secondary))];
+  }
+
+  .bg-sidebar {
+    @apply bg-[rgb(var(--bg-sidebar))];
+  }
+
+  .bg-header {
+    @apply bg-[rgb(var(--bg-header))];
+  }
+
+  .bg-card {
+    @apply bg-[rgb(var(--bg-card))];
+  }
+
+  .bg-hover {
+    @apply bg-[rgb(var(--bg-hover))];
+  }
+
+  .text-app-primary {
+    @apply text-[rgb(var(--text-primary))];
+  }
+
+  .text-app-secondary {
+    @apply text-[rgb(var(--text-secondary))];
+  }
+
+  .text-app-tertiary {
+    @apply text-[rgb(var(--text-tertiary))];
+  }
+
+  .border-app {
+    @apply border-[rgb(var(--border-primary))];
+  }
+
+  .btn-primary {
+    @apply bg-[rgb(var(--color-primary))] text-white hover:bg-opacity-90;
+  }
+
+  .btn-secondary {
+    @apply bg-[rgb(var(--color-secondary))] text-white hover:bg-opacity-90;
+  }
+
+  .btn-success {
+    @apply bg-[rgb(var(--color-success))] text-white hover:bg-opacity-90;
+  }
+
+  .btn-warning {
+    @apply bg-[rgb(var(--color-warning))] text-white hover:bg-opacity-90;
+  }
+
+  .btn-danger {
+    @apply bg-[rgb(var(--color-danger))] text-white hover:bg-opacity-90;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.7); opacity: 0.8; }
+  50% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(0.7); opacity: 0.8; }
+}
+
+@keyframes scanning-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Glass effect */
+.glass-morph {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animation Classes */
+.login-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.radar-ring {
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.scanning-line {
+  animation: scanning-line 2s linear infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+.pulse-ring {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Input glow effect */
+.input-glow:focus {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Alert Glows */
+.alert-glow-red {
+  animation: glowRed 2s infinite;
+}
+
+.alert-glow-yellow {
+  animation: glowYellow 2s infinite;
+}
+
+@keyframes glowRed {
+  0%, 100% { box-shadow: 0 0 10px rgba(var(--color-danger), 0.5); }
+  50% { box-shadow: 0 0 20px rgba(var(--color-danger), 0.8); }
+}
+
+@keyframes glowYellow {
+  0%, 100% { box-shadow: 0 0 10px rgba(var(--color-warning), 0.5); }
+  50% { box-shadow: 0 0 20px rgba(var(--color-warning), 0.8); }
+}
+
+/* Hover effects */
+.hover-scale {
+  transition: transform 0.2s;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Chart styles */
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* Timeline styles */
+.timeline-dot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background-color: rgb(var(--bg-primary));
+}
+
+.timeline-line::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  bottom: 0;
+  width: 2px;
+  background-color: rgb(var(--border-primary));
+}

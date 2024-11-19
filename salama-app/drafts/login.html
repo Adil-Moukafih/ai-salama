@@ -1,0 +1,210 @@
+<html class="size-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://kit.fontawesome.com/0d11f7e939.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+  .orbitron {
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse-ring {
+    0% { transform: scale(0.7); opacity: 0.8; }
+    50% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(0.7); opacity: 0.8; }
+  }
+  
+  @keyframes scanning-line {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .glass-morph {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  #particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .login-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .radar-ring {
+    animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .scanning-line {
+    animation: scanning-line 2s linear infinite;
+  }
+
+  .input-glow:focus {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Animated Background Elements -->
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full border-2 border-blue-500 radar-ring"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full border-2 border-green-500 radar-ring" style="animation-delay: -1.5s"></div>
+    <div class="absolute top-1/3 right-1/3 w-48 h-48 rounded-full border-2 border-purple-500 radar-ring" style="animation-delay: -0.75s"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 relative z-10 flex flex-col items-center">
+    <!-- Logo and Title -->
+    <div class="text-center mb-10 login-animation">
+      <div class="flex items-center justify-center mb-4">
+        <div class="relative">
+          <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center relative overflow-hidden">
+            <i class="fas fa-shield-alt text-4xl text-white"></i>
+            <!-- Scanning Effect -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/20 to-transparent scanning-line"></div>
+          </div>
+          <!-- Pulse Rings -->
+          <div class="absolute inset-0 rounded-full border-2 border-blue-500/50 animate-ping"></div>
+          <div class="absolute inset-0 rounded-full border-2 border-blue-500/30" style="animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite"></div>
+        </div>
+      </div>
+      <h1 class="orbitron text-5xl font-bold text-white mb-4 tracking-wider">SALAMA</h1>
+      <div class="flex flex-col items-center space-y-2">
+        <p class="text-blue-400 text-lg">Safety Assurance with Live AI Monitoring & Alerts</p>
+        <p class="text-gray-400 italic">"Guarding Tomorrow's Railways, Today"</p>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="glass-morph rounded-2xl p-8 w-full max-w-md login-animation" style="animation-delay: 0.3s">
+      <div class="mb-8 text-center">
+        <h2 class="text-2xl font-semibold text-white mb-2">Welcome Back</h2>
+        <p class="text-gray-400">Enter your credentials to access the system</p>
+      </div>
+
+      <form class="space-y-6">
+        <div>
+          <label class="block text-gray-300 text-sm font-medium mb-2">Username</label>
+          <div class="relative">
+            <span class="absolute left-3 top-3 text-gray-400">
+              <i class="fas fa-user"></i>
+            </span>
+            <input type="text" 
+                   class="w-full bg-gray-800/50 border border-gray-700 text-white rounded-lg py-2.5 pl-10 pr-4 input-glow transition-shadow focus:outline-none focus:border-blue-500"
+                   placeholder="Enter your username">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-300 text-sm font-medium mb-2">Password</label>
+          <div class="relative">
+            <span class="absolute left-3 top-3 text-gray-400">
+              <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" 
+                   class="w-full bg-gray-800/50 border border-gray-700 text-white rounded-lg py-2.5 pl-10 pr-4 input-glow transition-shadow focus:outline-none focus:border-blue-500"
+                   placeholder="Enter your password">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <label class="flex items-center">
+            <input type="checkbox" class="w-4 h-4 bg-gray-800 border-gray-700 rounded">
+            <span class="ml-2 text-sm text-gray-400">Remember me</span>
+          </label>
+          <a href="#" class="text-sm text-blue-400 hover:text-blue-300">Forgot password?</a>
+        </div>
+
+        <button class="w-full bg-blue-600 text-white rounded-lg py-3 px-4 hover:bg-blue-500 transition-colors">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Initialize Particles.js -->
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: 80,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: '#ffffff'
+        },
+        shape: {
+          type: 'circle'
+        },
+        opacity: {
+          value: 0.3,
+          random: true
+        },
+        size: {
+          value: 3,
+          random: true
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: '#3B82F6',
+          opacity: 0.2,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: 'none',
+          random: false,
+          straight: false,
+          out_mode: 'out',
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: {
+            enable: true,
+            mode: 'grab'
+          },
+          onclick: {
+            enable: true,
+            mode: 'push'
+          },
+          resize: true
+        },
+        modes: {
+          grab: {
+            distance: 140,
+            line_linked: {
+              opacity: 0.5
+            }
+          }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>
