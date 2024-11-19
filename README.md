@@ -1,36 +1,87 @@
-# SALAMA - Railway Safety Monitoring System
+# SALAMA - Safety Assurance with Live AI Monitoring & Alerts
 
 > ⚠️ **Development Status**: This project is currently under active development and not all features are fully functional yet. We are working on implementing and stabilizing various components of the system.
 
-SALAMA is a comprehensive railway safety monitoring system that combines real-time camera feeds with intelligent detection zones to ensure railway platform safety. The system consists of a Next.js frontend application for monitoring and management, and a FastAPI backend for handling data processing and storage.
+SALAMA is an advanced railway safety system that leverages cutting-edge AI technologies to transform standard surveillance cameras into intelligent safety monitoring devices. The system combines real-time object detection with contextual understanding to provide proactive safety measures in railway environments.
 
-## Features
+## Core Objectives
 
-- 🎥 **Camera Management**
+1. **Enhanced Safety Monitoring**
 
-  - Real-time camera feed monitoring
-  - Camera status tracking
-  - Multiple camera views
-  - Detection zone configuration
+   - Real-time threat detection
+   - Proactive alert generation
+   - Contextual situation analysis
+   - Multi-camera coordination
 
-- 🚨 **Alert System**
+2. **Operational Efficiency**
 
-  - Real-time safety alerts
-  - Severity-based alert classification
-  - Alert history and management
-  - Instant notifications
+   - Automated monitoring
+   - Reduced response times
+   - Resource optimization
+   - Incident prevention
 
-- 📊 **Dashboard**
+3. **System Intelligence**
+   - AI-powered detection
+   - Context-aware analysis
+   - Learning capabilities
+   - Predictive insights
 
-  - Real-time monitoring interface
-  - Performance analytics
-  - System activity tracking
-  - Statistical reporting
+## Key Features
 
-- 🔒 **Security**
-  - User authentication
-  - Role-based access control
-  - Secure API communication
+- 🎥 **Real-Time Monitoring**
+
+  - Multi-stream video processing
+  - YOLOv5-powered object detection
+  - LLaMA integration for context analysis
+  - Intelligent threat assessment
+
+- 🚨 **Safety Features**
+
+  - Platform edge monitoring with person detection
+  - Track obstruction detection
+  - Unauthorized access monitoring
+  - Crowd density and flow analysis
+
+- 📊 **System Capabilities**
+  - Scalable multi-camera management
+  - Instant notification system
+  - Performance and incident analysis
+  - Context-aware decision support
+
+## System Architecture
+
+#### Frontend (salama-app)
+
+- Framework: Next.js 14
+- State Management: Zustand
+- Real-time: Socket.io-client
+- UI Components: shadcn/ui
+- Styling: Tailwind CSS
+- Charts: Recharts
+- Type Safety: TypeScript
+
+#### Backend (salama-backend)
+
+- Framework: FastAPI
+- AI Processing: PyTorch, OpenCV
+- Queue System: Celery with Redis
+- WebSockets: FastAPI WebSockets
+- API Documentation: OpenAPI (Swagger)
+
+#### Database & Storage
+
+- Primary: PostgreSQL 16 + TimescaleDB
+- Cache: Redis
+- Search: Meilisearch
+- Object Storage: MinIO
+
+#### DevOps
+
+- Containerization: Docker
+- Orchestration: Kubernetes
+- CI/CD: GitHub Actions
+- Monitoring: Grafana + Prometheus
+- Logging: ELK Stack
 
 ## Development Status
 
@@ -43,25 +94,6 @@ The following features are currently under development:
 - User authentication system
 
 Please note that some features may be partially implemented or may not work as expected. We recommend checking the project's issues and pull requests for the most up-to-date status of specific features.
-
-## Architecture
-
-### Frontend (salama-app)
-
-- Next.js 15.0
-- React 19
-- TypeScript
-- TailwindCSS
-- Chart.js for analytics
-- WebSocket integration for real-time updates
-
-### Backend (salama-backend)
-
-- FastAPI
-- PostgreSQL database
-- SQLAlchemy ORM
-- Pydantic for data validation
-- RESTful API architecture
 
 ## Getting Started
 
@@ -181,22 +213,6 @@ Detailed technical documentation is available in the `docs` directory:
 
 - [Technical Documentation](salama-app/docs/)
 - [Docker Setup Guide](salama-app/README.Docker.md)
-
-## Development
-
-### Frontend Development
-
-- Built with Next.js and TypeScript
-- Uses TailwindCSS for styling
-- Implements real-time updates via WebSocket
-- Includes comprehensive component testing
-
-### Backend Development
-
-- RESTful API built with FastAPI
-- PostgreSQL database with SQLAlchemy ORM
-- Includes database migrations using Alembic
-- Comprehensive API documentation with OpenAPI
 
 ## Contributing
 
