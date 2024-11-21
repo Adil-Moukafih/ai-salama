@@ -1,6 +1,6 @@
 # SALAMA - Safety Assurance with Live AI Monitoring & Alerts
 
-> ⚠️ **Development Status**: This project is currently under active development and not all features are fully functional yet. We are working on implementing and stabilizing various components of the system.
+> ⚠️ **Development Status** ⚠️ : This project is currently under active development and not all features are fully functional yet. We are working on implementing and stabilizing various components of the system.
 
 SALAMA is an advanced railway safety system that leverages cutting-edge AI technologies to transform standard surveillance cameras into intelligent safety monitoring devices. The system combines real-time object detection with contextual understanding to provide proactive safety measures in railway environments.
 
