@@ -1,30 +1,34 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '../../../components/shared/Header';
 import Sidebar from '../../../components/shared/Sidebar';
 import { ThemeProvider } from '../../../components/shared/ThemeProvider';
-import { cameraFeeds } from '../../../components/dashboard/CameraGrid';
+import { getCamera, Camera } from '../../../lib/api';
 
 export default function CameraDetailsPage() {
   const params = useParams();
   const cameraId = Number(params.id);
-  const camera = cameraFeeds.find(cam => cam.id === cameraId);
+  const [camera, setCamera] = useState<Camera | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!camera) {
-    return <div>Camera not found</div>;
-  }
-
-  const getAlertColor = (alert?: 'critical' | 'warning' | 'normal') => {
-    switch (alert) {
-      case 'critical':
-        return 'text-[rgb(var(--color-danger))]';
-      case 'warning':
-        return 'text-[rgb(var(--color-warning))]';
-      default:
-        return 'text-[rgb(var(--color-success))]';
+  useEffect(() => {
+    async function loadCamera() {
+      try {
+        const fetchedCamera = await getCamera(cameraId);
+        setCamera(fetchedCamera);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching camera:', err);
+        setError('Failed to load camera details');
+        setLoading(false);
+      }
     }
-  };
+
+    loadCamera();
+  }, [cameraId]);
 
   // Mock historical alerts
   const historicalAlerts = [
@@ -48,8 +52,53 @@ export default function CameraDetailsPage() {
     },
   ];
 
-  const alertText = camera.alert ? camera.alert.charAt(0).toUpperCase() + camera.alert.slice(1) : 'Normal';
-  const statusText = camera.status.charAt(0).toUpperCase() + camera.status.slice(1);
+  if (loading) {
+    return (
+      <ThemeProvider>
+        <div className="flex h-screen bg-app">
+          <Sidebar />
+          <div className="flex-1 flex flex-col">
+            <Header />
+            <main className="flex-1 overflow-auto bg-app p-6">
+              <div className="max-w-7xl mx-auto space-y-6">
+                <div className="h-10 w-1/2 bg-gray-200 animate-pulse rounded"></div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2 h-96 bg-gray-200 animate-pulse rounded"></div>
+                  <div className="space-y-6">
+                    <div className="h-48 bg-gray-200 animate-pulse rounded"></div>
+                    <div className="h-48 bg-gray-200 animate-pulse rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </ThemeProvider>
+    );
+  }
+
+  if (error || !camera) {
+    return (
+      <ThemeProvider>
+        <div className="flex h-screen items-center justify-center text-red-500">
+          {error || 'Camera not found'}
+        </div>
+      </ThemeProvider>
+    );
+  }
+
+  const getStatusColor = (status?: string) => {
+    switch (status?.toLowerCase()) {
+      case 'critical':
+        return 'text-red-500';
+      case 'warning':
+        return 'text-yellow-500';
+      case 'offline':
+        return 'text-gray-500';
+      default:
+        return 'text-green-500';
+    }
+  };
 
   return (
     <ThemeProvider>
@@ -95,9 +144,9 @@ export default function CameraDetailsPage() {
                               <i className="fas fa-expand text-app-secondary"></i>
                             </button>
                           </div>
-                          <span className={`flex items-center ${getAlertColor(camera.alert)}`}>
+                          <span className={`flex items-center ${getStatusColor(camera.status)}`}>
                             <i className="fas fa-circle text-xs mr-2"></i>
-                            {statusText}
+                            {camera.status || 'Unknown'}
                           </span>
                         </div>
                       </div>
@@ -111,10 +160,10 @@ export default function CameraDetailsPage() {
                   <div className="bg-card rounded-lg p-4 border border-app">
                     <h3 className="text-lg font-semibold text-app-primary mb-4">Camera Details</h3>
                     <div className="space-y-3">
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-app-secondary">Status</span>
-                        <span className={getAlertColor(camera.alert)}>
-                          {statusText}
+                        <span className={`font-semibold ${getStatusColor(camera.status)}`}>
+                          {camera.status || 'Unknown'}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -122,14 +171,14 @@ export default function CameraDetailsPage() {
                         <span className="text-app-primary">{camera.location}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-app-secondary">Current Alert Level</span>
-                        <span className={getAlertColor(camera.alert)}>
-                          {alertText}
-                        </span>
+                        <span className="text-app-secondary">Name</span>
+                        <span className="text-app-primary">{camera.name}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-app-secondary">Detection Count</span>
-                        <span className="text-app-primary">{camera.detections.reduce((acc, det) => acc + det.count, 0)}</span>
+                        <span className="text-app-secondary">RTSP URL</span>
+                        <span className="text-app-primary text-right max-w-[200px] truncate" title={camera.rtsp_url}>
+                          {camera.rtsp_url || 'Not configured'}
+                        </span>
                       </div>
                     </div>
                   </div>
