@@ -3,10 +3,15 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from . import models, schemas
+import logging
 
 ModelType = TypeVar("ModelType", bound=Any)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: Type[ModelType]):
@@ -59,5 +64,33 @@ class CRUDDetectionZone(CRUDBase[models.DetectionZone, schemas.DetectionZoneCrea
     pass
 
 camera = CRUDCamera(models.Camera)
-alert = CRUDAlert(models.Alert)
+alert_crud = CRUDAlert(models.Alert)
 detection_zone = CRUDDetectionZone(models.DetectionZone)
+
+# Module-level functions to match the existing interface in alerts.py
+def get_alerts(db: Session, skip: int = 0, limit: int = 100) -> List[models.Alert]:
+    return alert_crud.get_multi(db, skip=skip, limit=limit)
+
+def get_alert(db: Session, alert_id: int) -> Optional[models.Alert]:
+    return alert_crud.get(db, id=alert_id)
+
+def create_alert(db: Session, alert: schemas.AlertCreate) -> models.Alert:
+    try:
+        # Log the incoming alert data for debugging
+        logger.info(f"Creating alert with data: {alert}")
+        
+        # Validate alert type
+        if alert.type not in [t.value for t in schemas.AlertType]:
+            raise ValueError(f"Invalid alert type: {alert.type}")
+        
+        # Create the alert using the alert_crud object
+        new_alert = alert_crud.create(db, obj_in=alert)
+        
+        logger.info(f"Alert created successfully: {new_alert}")
+        return new_alert
+    except Exception as e:
+        logger.error(f"Error creating alert: {str(e)}")
+        raise
+
+def delete_alert(db: Session, alert_id: int) -> models.Alert:
+    return alert_crud.remove(db, id=alert_id)

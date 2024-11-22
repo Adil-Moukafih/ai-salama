@@ -1,6 +1,15 @@
 from typing import Optional, Dict
 from datetime import datetime
 from pydantic import BaseModel
+from enum import Enum
+
+# Alert Type Enum to match the model
+class AlertType(str, Enum):
+    MOTION = "motion"
+    INTRUSION = "intrusion"
+    OBJECT_DETECTION = "object_detection"
+    CAMERA_OFFLINE = "camera_offline"
+    SYSTEM_ERROR = "system_error"
 
 # Camera schemas
 class CameraBase(BaseModel):
@@ -23,6 +32,13 @@ class AlertBase(BaseModel):
     message: str
     severity: str
     camera_id: int
+    type: AlertType
+    
+    # New optional fields for more detailed alerts
+    detection_zone: Optional[str] = None
+    object_detected: Optional[str] = None
+    confidence_score: Optional[str] = None
+    additional_metadata: Optional[Dict] = None
 
 class AlertCreate(AlertBase):
     pass
