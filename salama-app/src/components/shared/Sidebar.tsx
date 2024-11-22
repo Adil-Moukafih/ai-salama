@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 interface SystemMetric {
   label: string;
@@ -55,9 +56,14 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="h-16 flex items-center px-6 border-b border-app">
         <Link href="/dashboard" className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-[rgb(var(--color-primary))] rounded flex items-center justify-center">
-            <i className="fas fa-shield-alt text-white"></i>
-          </div>
+            <Image 
+              src="/logo.svg" 
+              alt="Salama Logo" 
+              width={30} 
+              height={30} 
+              className="text-white"
+            />
+          
           <span className="text-lg font-semibold text-app-primary">SALAMA</span>
         </Link>
       </div>

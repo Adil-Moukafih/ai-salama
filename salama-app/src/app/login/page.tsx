@@ -3,6 +3,7 @@
 import LoginForm from '@/components/auth/LoginForm';
 import ParticlesBackground from '@/components/shared/ParticlesBackground';
 import { Orbitron } from 'next/font/google';
+import Image from 'next/image';
 
 const orbitron = Orbitron({ subsets: ['latin'] });
 
@@ -20,7 +21,13 @@ export default function LoginPage() {
           <div className="flex items-center justify-center mb-4">
             <div className="relative">
               <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center relative overflow-hidden">
-                <i className="fas fa-shield-alt text-4xl text-white"></i>
+                <Image 
+                  src="/logo.svg" 
+                  alt="Salama Logo" 
+                  width={100} 
+                  height={100} 
+                  className="z-10 relative"
+                />
                 {/* Scanning Effect */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/20 to-transparent scanning-line"></div>
               </div>

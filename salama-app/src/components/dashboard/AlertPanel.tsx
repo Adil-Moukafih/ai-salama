@@ -1,34 +1,28 @@
 'use client';
 
-import { useAlerts, Alert } from '@/hooks/useAlerts';
+import React, { useState } from 'react';
+import { useAlerts, Alert } from '../../hooks/useAlerts';
 
-interface AlertCardProps {
-  alert: Alert;
-}
-
-function AlertCard({ alert }: AlertCardProps) {
+function AlertCard({ alert }: { alert: Alert }) {
   const getTypeStyles = (type: Alert['type']) => {
     switch (type) {
       case 'critical':
         return {
           text: 'text-[rgb(var(--color-danger))]',
           bg: 'bg-[rgb(var(--color-danger)_/_0.2)]',
-          border: 'border-[rgb(var(--color-danger))]',
-          glow: 'alert-glow-red'
+          border: 'border-[rgb(var(--color-danger))]'
         };
       case 'warning':
         return {
           text: 'text-[rgb(var(--color-warning))]',
           bg: 'bg-[rgb(var(--color-warning)_/_0.2)]',
-          border: 'border-[rgb(var(--color-warning))]',
-          glow: 'alert-glow-yellow'
+          border: 'border-[rgb(var(--color-warning))]'
         };
       case 'info':
         return {
           text: 'text-[rgb(var(--color-info))]',
           bg: 'bg-[rgb(var(--color-info)_/_0.2)]',
-          border: 'border-[rgb(var(--color-info))]',
-          glow: ''
+          border: 'border-[rgb(var(--color-info))]'
         };
     }
   };
@@ -36,7 +30,12 @@ function AlertCard({ alert }: AlertCardProps) {
   const styles = getTypeStyles(alert.type);
 
   return (
-    <div className={`bg-card/50 rounded-lg p-4 border-l-4 ${styles.border} hover-scale ${styles.glow}`}>
+    <div 
+      className={`
+        bg-card/50 rounded-lg p-4 border-l-4 ${styles.border} 
+        transition-all duration-200
+      `}
+    >
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center space-x-2">
@@ -52,45 +51,24 @@ function AlertCard({ alert }: AlertCardProps) {
           <span className={`text-xs ${styles.bg} ${styles.text} px-2 py-1 rounded-full`}>
             {alert.location}
           </span>
-          <button className="mt-2 text-xs text-[rgb(var(--color-primary))] hover:text-[rgb(var(--color-primary)_/_0.8)]">
-            View Details
-          </button>
         </div>
-      </div>
-      <div className="mt-3 flex items-center space-x-3">
-        {alert.actions?.map((action, idx) => (
-          <button
-            key={idx}
-            className={`text-xs px-3 py-1 rounded-lg text-white transition-colors ${
-              action === 'Acknowledge'
-                ? 'bg-[rgb(var(--color-success))] hover:bg-[rgb(var(--color-success)_/_0.8)]'
-                : action === 'Monitor'
-                ? 'bg-[rgb(var(--color-info))] hover:bg-[rgb(var(--color-info)_/_0.8)]'
-                : 'bg-[rgb(var(--color-primary))] hover:bg-[rgb(var(--color-primary)_/_0.8)]'
-            }`}
-          >
-            {action}
-          </button>
-        ))}
       </div>
     </div>
   );
 }
 
 export default function AlertPanel() {
-  const { alerts, loading, error, refetch } = useAlerts(5);  // Fetch 5 most recent alerts
+  const [autoRefreshInterval, setAutoRefreshInterval] = useState<number | null>(null);
+  const { alerts, loading, error, refetch } = useAlerts(5, 0, autoRefreshInterval || undefined);
+
+  const toggleAutoRefresh = () => {
+    setAutoRefreshInterval(current => current ? null : 1000);
+  };
 
   if (loading) {
     return (
       <div className="bg-card rounded-lg p-6 border border-app">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-app-primary">Active Alerts</h2>
-        </div>
-        <div className="space-y-4">
-          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
-          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
-          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
-        </div>
+        
       </div>
     );
   }
@@ -108,12 +86,15 @@ export default function AlertPanel() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold text-app-primary">Active Alerts</h2>
         <div className="flex items-center space-x-2">
-          <span className="text-xs text-app-secondary">Auto-refresh:</span>
           <button 
-            onClick={refetch}
-            className="text-xs px-2 py-1 bg-[rgb(var(--color-primary))] text-white rounded hover:bg-[rgb(var(--color-primary)_/_0.8)] transition-colors"
+            onClick={toggleAutoRefresh}
+            className={`text-xs px-2 py-1 rounded ${
+              autoRefreshInterval 
+                ? 'bg-green-500 text-white' 
+                : 'bg-blue-500 text-white'
+            }`}
           >
-            Refresh
+            {autoRefreshInterval ? 'Pause' : 'Auto Refresh'}
           </button>
         </div>
       </div>
@@ -123,7 +104,7 @@ export default function AlertPanel() {
           <p className="text-center text-app-secondary">No active alerts</p>
         ) : (
           alerts.map((alert) => (
-            <AlertCard key={alert.id} alert={alert} />
+            <AlertCard key={`${alert.id}-${alert.timestamp}`} alert={alert} />
           ))
         )}
       </div>

@@ -18,6 +18,7 @@ export default function AddCameraModal({
     name: '',
     location: '',
     rtspUrl: '',
+    systemPrompt: '', // New field for Camera System Prompt
     resolution: '1080p',
     frameRate: '30',
     detectionZones: {
@@ -44,17 +45,16 @@ export default function AddCameraModal({
         name: formData.name,
         location: formData.location,
         rtsp_url: formData.rtspUrl,
-        // Add other fields as needed by backend
+        system_prompt: formData.systemPrompt, // Include system prompt in camera data
       };
 
       await createCamera(cameraData);
       
-      // Call onCameraAdded if provided
       if (onCameraAdded) {
         onCameraAdded();
       }
       
-      onClose(); // Close modal on successful submission
+      onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to add camera');
       console.error('Camera creation error:', err);
@@ -75,7 +75,7 @@ export default function AddCameraModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 backdrop-blur-sm">
       <div className="bg-gray-900 bg-opacity-90 rounded-xl border border-gray-700 shadow-2xl p-6 w-full max-w-2xl mx-4 backdrop-blur-lg">
-        <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-semibold text-white">Add New Camera</h3>
           <button 
             onClick={onClose} 
@@ -132,56 +132,21 @@ export default function AddCameraModal({
             </div>
           </div>
 
-          {/* Camera Settings */}
-          <div className="space-y-4">
-            <h4 className="text-md font-medium text-gray-300">Camera Settings</h4>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Resolution</label>
-                <select 
-                  value={formData.resolution}
-                  onChange={(e) => updateFormData('resolution', e.target.value)}
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="1080p">1080p</option>
-                  <option value="720p">720p</option>
-                  <option value="480p">480p</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Frame Rate</label>
-                <select 
-                  value={formData.frameRate}
-                  onChange={(e) => updateFormData('frameRate', e.target.value)}
-                  className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="30">30 fps</option>
-                  <option value="25">25 fps</option>
-                  <option value="15">15 fps</option>
-                </select>
-              </div>
-            </div>
 
+          {/* Camera System Prompt Section */}
+          <div className="space-y-4">
+            <h4 className="text-md font-medium text-gray-300">Camera System Prompt</h4>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Detection Zones</label>
-              <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-                <div className="flex items-center space-x-4">
-                  {Object.entries(formData.detectionZones).map(([zone, checked]) => (
-                    <label key={zone} className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        checked={checked}
-                        onChange={(e) => updateFormData(zone, e.target.checked)}
-                        className="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-700 bg-gray-800"
-                      />
-                      <span className="ml-2 text-sm text-gray-300">
-                        {zone.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                AI Instruction Prompt
+              </label>
+              <textarea 
+                value={formData.systemPrompt}
+                onChange={(e) => updateFormData('systemPrompt', e.target.value)}
+                className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
+                placeholder="Provide instructions for the AI on how to handle detections (e.g., 'If a person is detected after hours, send an alert to security.')"
+                rows={4}
+              />
             </div>
           </div>
 

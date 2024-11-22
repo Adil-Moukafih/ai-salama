@@ -76,12 +76,23 @@ def get_alert(db: Session, alert_id: int) -> Optional[models.Alert]:
 
 def create_alert(db: Session, alert: schemas.AlertCreate) -> models.Alert:
     try:
+        # Explicit validation for camera_id
+        if alert.camera_id is None:
+            logger.error("Attempted to create alert with None camera_id")
+            raise ValueError("Camera ID cannot be None")
+        
         # Log the incoming alert data for debugging
         logger.info(f"Creating alert with data: {alert}")
         
         # Validate alert type
         if alert.type not in [t.value for t in schemas.AlertType]:
             raise ValueError(f"Invalid alert type: {alert.type}")
+        
+        # Verify camera exists (additional validation)
+        existing_camera = db.query(models.Camera).filter(models.Camera.id == alert.camera_id).first()
+        if not existing_camera:
+            logger.error(f"Attempted to create alert for non-existent camera ID: {alert.camera_id}")
+            raise ValueError(f"Camera with ID {alert.camera_id} does not exist")
         
         # Create the alert using the alert_crud object
         new_alert = alert_crud.create(db, obj_in=alert)
