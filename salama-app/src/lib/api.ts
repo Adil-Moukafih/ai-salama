@@ -52,7 +52,6 @@ export async function fetchData(endpoint: string) {
 
 export async function getCameras(skip = 0, limit = 100) {
   try {
-    console.log("Attempting to get cameras");
     const response = await fetch(
       `${API_BASE_URL}/cameras/?skip=${skip}&limit=${limit}`,
       {
@@ -63,8 +62,6 @@ export async function getCameras(skip = 0, limit = 100) {
         credentials: "include",
       }
     );
-
-    console.log("Response status:", response.status);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -92,6 +89,54 @@ export async function getCameras(skip = 0, limit = 100) {
   }
 }
 
+export async function getCamera(id: number) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/cameras/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${errorText}`
+      );
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Get camera error:", error);
+    throw error;
+  }
+}
+
+export async function getCameraSnapshot(id: number) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/cameras/${id}/snapshot`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${errorText}`
+      );
+    }
+
+    return response.blob();
+  } catch (error) {
+    console.error("Get camera snapshot error:", error);
+    throw error;
+  }
+}
+
 export async function createCamera(camera: Omit<Camera, "id">) {
   try {
     const response = await fetch(`${API_BASE_URL}/cameras/`, {
@@ -113,30 +158,6 @@ export async function createCamera(camera: Omit<Camera, "id">) {
     return response.json();
   } catch (error) {
     console.error("Create camera error:", error);
-    throw error;
-  }
-}
-
-export async function getCamera(id: number) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/cameras/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `HTTP error! status: ${response.status}, message: ${errorText}`
-      );
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Get camera error:", error);
     throw error;
   }
 }
@@ -190,26 +211,41 @@ export async function deleteCamera(id: number) {
   }
 }
 
-export async function getCameraSnapshot(id: number) {
+export async function getAlerts(skip = 0, limit = 10) {
   try {
-    const response = await fetch(`${API_BASE_URL}/cameras/${id}/snapshot`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/alerts/?skip=${skip}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error(`Get alerts error: ${response.status} - ${errorText}`);
       throw new Error(
         `HTTP error! status: ${response.status}, message: ${errorText}`
       );
     }
 
-    return response.blob();
+    const data = await response.json();
+    console.log("Alerts fetched:", data);
+    return data;
   } catch (error) {
-    console.error("Get camera snapshot error:", error);
+    console.error("Complete get alerts error:", error);
+
+    if (error instanceof TypeError) {
+      if (error.message === "Failed to fetch") {
+        throw new Error(
+          "Network error. Unable to connect to the server. Please check your connection."
+        );
+      }
+    }
+
     throw error;
   }
 }

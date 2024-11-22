@@ -1,42 +1,12 @@
 'use client';
 
-interface Alert {
-  type: 'critical' | 'warning' | 'info';
-  title: string;
-  location: string;
-  time: string;
-  details: string;
-  actions: string[];
+import { useAlerts, Alert } from '@/hooks/useAlerts';
+
+interface AlertCardProps {
+  alert: Alert;
 }
 
-const alerts: Alert[] = [
-  {
-    type: 'critical',
-    title: 'Platform Edge Violation',
-    location: 'Platform A',
-    time: '2 mins ago',
-    details: 'Person detected in danger zone',
-    actions: ['Acknowledge', 'Dispatch Security']
-  },
-  {
-    type: 'warning',
-    title: 'Track Obstruction',
-    location: 'Track B',
-    time: '5 mins ago',
-    details: 'Object detected on track',
-    actions: ['Acknowledge', 'Dispatch Maintenance']
-  },
-  {
-    type: 'info',
-    title: 'Increased Passenger Flow',
-    location: 'Platform C',
-    time: '15 mins ago',
-    details: 'Above average platform occupancy',
-    actions: ['Monitor']
-  }
-];
-
-function AlertCard({ alert }: { alert: Alert }) {
+function AlertCard({ alert }: AlertCardProps) {
   const getTypeStyles = (type: Alert['type']) => {
     switch (type) {
       case 'critical':
@@ -73,9 +43,9 @@ function AlertCard({ alert }: { alert: Alert }) {
             <span className={`${styles.text} text-xs font-semibold`}>
               {alert.type.toUpperCase()}
             </span>
-            <span className="text-app-tertiary text-xs">{alert.time}</span>
+            <span className="text-app-tertiary text-xs">{alert.timestamp}</span>
           </div>
-          <h3 className="font-medium mt-1 text-app-primary">{alert.title}</h3>
+          <h3 className="font-medium mt-1 text-app-primary">{alert.object_detected || 'Unspecified Object'}</h3>
           <p className="text-sm text-app-secondary mt-1">{alert.details}</p>
         </div>
         <div className="flex flex-col items-end">
@@ -88,7 +58,7 @@ function AlertCard({ alert }: { alert: Alert }) {
         </div>
       </div>
       <div className="mt-3 flex items-center space-x-3">
-        {alert.actions.map((action, idx) => (
+        {alert.actions?.map((action, idx) => (
           <button
             key={idx}
             className={`text-xs px-3 py-1 rounded-lg text-white transition-colors ${
@@ -108,22 +78,54 @@ function AlertCard({ alert }: { alert: Alert }) {
 }
 
 export default function AlertPanel() {
+  const { alerts, loading, error, refetch } = useAlerts(5);  // Fetch 5 most recent alerts
+
+  if (loading) {
+    return (
+      <div className="bg-card rounded-lg p-6 border border-app">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg font-semibold text-app-primary">Active Alerts</h2>
+        </div>
+        <div className="space-y-4">
+          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
+          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
+          <div className="animate-pulse bg-gray-200 h-24 w-full rounded-lg"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-card rounded-lg p-6 border border-app text-red-500">
+        Failed to load alerts. {error}
+      </div>
+    );
+  }
+
   return (
     <div className="bg-card rounded-lg p-6 border border-app">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold text-app-primary">Active Alerts</h2>
         <div className="flex items-center space-x-2">
           <span className="text-xs text-app-secondary">Auto-refresh:</span>
-          <button className="text-xs px-2 py-1 bg-[rgb(var(--color-primary))] text-white rounded hover:bg-[rgb(var(--color-primary)_/_0.8)] transition-colors">
-            ON
+          <button 
+            onClick={refetch}
+            className="text-xs px-2 py-1 bg-[rgb(var(--color-primary))] text-white rounded hover:bg-[rgb(var(--color-primary)_/_0.8)] transition-colors"
+          >
+            Refresh
           </button>
         </div>
       </div>
 
       <div className="space-y-4">
-        {alerts.map((alert, index) => (
-          <AlertCard key={index} alert={alert} />
-        ))}
+        {alerts.length === 0 ? (
+          <p className="text-center text-app-secondary">No active alerts</p>
+        ) : (
+          alerts.map((alert) => (
+            <AlertCard key={alert.id} alert={alert} />
+          ))
+        )}
       </div>
     </div>
   );
