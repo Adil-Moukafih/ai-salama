@@ -1,3 +1,5 @@
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+
 # SALAMA - Safety Assurance with Live AI Monitoring & Alerts
 
 > ⚠️ **Development Status** ⚠️ : This project is currently under active development and not all features are fully functional yet. We are working on implementing and stabilizing various components of the system.
