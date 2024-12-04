@@ -12,6 +12,8 @@
 
 SALAMA is a groundbreaking AI prototype transforming surveillance systems through intelligent monitoring and alerts. Leveraging the unparalleled detection speed of **YOLO11** and the advanced contextual understanding of **LLaMA 3.2 Vision**, SALAMA enhances railway safety by detecting risks in real-time and ensuring proactive safety measures.
 
+SALAMA is an AI prototype designed to improve surveillance systems with intelligent monitoring and alerts. By combining YOLO11's fast detection capabilities with LLaMA 3.2 Vision's contextual understanding, it aims to enhance railway safety by identifying risks in real-time and enabling proactive safety measures. Currently in its prototype phase, SALAMA represents a step towards smarter and safer railway operations.
+
 ---
 
 ## 🚀 Getting Started
