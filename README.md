@@ -94,7 +94,7 @@ SALAMA is an AI prototype designed to improve surveillance systems with intellig
 
 ---
 
-## 🌟 Get Involved
+# 🌟 Get Involved
 
 SALAMA is a collaborative project in its prototype stage, and we welcome contributions from the community. Here's how you can get involved:
 
@@ -102,6 +102,23 @@ SALAMA is a collaborative project in its prototype stage, and we welcome contrib
 - **Fork** the project to experiment and propose enhancements.
 - **Open Issues** for any bugs or feature suggestions.
 - **Collaborate** by submitting pull requests.
+
+If you'd like to support our work, consider making a donation:
+
+<p align="left">
+<a href="https://www.paypal.com/paypalme/AdilMoukafih">
+  <img src="Donate.png" alt="Donate with PayPal" width="25%" />
+</a>
+</p>
+
+We deeply appreciate the generosity of our supporters and donors! Your contributions make our mission possible.  
+**Donors and Supporters:**  
+
+- [Your Name Here]  
+- [Your Name Here]  
+- [Your Name Here]  
+
+*Want to see your name here? Donate today and support our efforts!* 🚀
 
 Together, let's innovate and make railway systems safer through advanced AI technologies! 🚅
 
