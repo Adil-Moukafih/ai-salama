@@ -1,229 +1,138 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-# SALAMA - Safety Assurance with Live AI Monitoring & Alerts
+# [🔴 SALAMA] - Safety Assurance with Live AI Monitoring & Alerts 🚦🤖
 
-> ⚠️ **Development Status** ⚠️ : This project is currently under active development and not all features are fully functional yet. We are working on implementing and stabilizing various components of the system.
+> **🚧 Development Status**: This is an early-stage prototype, and the code is not guaranteed to work as intended in all scenarios. Currently, the functionality is limited to adding a camera, utilizing the **Camera Prompt** feature, and performing one detection cycle using YOLO11 and LLaMA 3.2 Vision models. Additional features and capabilities are under active development. 🛠️ Contributions and feedback are welcome to help improve the project! 🚀
 
-SALAMA is an advanced railway safety system that leverages cutting-edge AI technologies to transform standard surveillance cameras into intelligent safety monitoring devices. The system combines real-time object detection with contextual understanding to provide proactive safety measures in railway environments.
+> **🏆 Award-Winning Innovation**: 2nd Prize Winner, TrainRail Hackathon Africa 2024 🌍
 
-## Core Objectives
+SALAMA is a groundbreaking AI prototype transforming surveillance systems through intelligent monitoring and alerts. Leveraging the unparalleled detection speed of **YOLO11** and the advanced contextual understanding of **LLaMA 3.2 Vision**, SALAMA enhances railway safety by detecting risks in real-time and ensuring proactive safety measures.
 
-1. **Enhanced Safety Monitoring**
+---
 
-   - Real-time threat detection
-   - Proactive alert generation
-   - Contextual situation analysis
-   - Multi-camera coordination
+## 🚀 Introduction
 
-2. **Operational Efficiency**
+In the realm of railway safety, the need for intelligent, real-time monitoring systems is paramount. Traditional surveillance often relies on manual oversight, leading to delayed responses and human error. SALAMA addresses these challenges by integrating state-of-the-art AI technologies to create a proactive safety net.
 
-   - Automated monitoring
-   - Reduced response times
-   - Resource optimization
-   - Incident prevention
+### The Vision
 
-3. **System Intelligence**
-   - AI-powered detection
-   - Context-aware analysis
-   - Learning capabilities
-   - Predictive insights
+Imagine a surveillance system capable of instantaneously detecting potential hazards and making context-aware decisions to prevent incidents. By harnessing the swift object detection capabilities of **YOLO11** and the sophisticated visual reasoning of **LLaMA 3.2 Vision**, SALAMA sets a new standard for intelligent monitoring systems.
 
-## Key Features
+### How SALAMA Transforms Surveillance
 
-- 🎥 **Real-Time Monitoring**
+- **YOLO11** provides lightning-fast object detection, processing video feeds at **100 FPS** to identify people, objects, and potential hazards in real-time.
+- **LLaMA 3.2 Vision** offers advanced contextual analysis, interpreting detections within their environment to trigger intelligent actions and reduce false positives.
+- The synergy of these technologies enables SALAMA to deliver proactive alerts, ensuring safety operators can respond swiftly to emerging risks.
 
-  - Multi-stream video processing
-  - YOLOv5-powered object detection
-  - LLaMA integration for context analysis
-  - Intelligent threat assessment
+---
 
-- 🚨 **Safety Features**
+## ⚡ Prototype Features
 
-  - Platform edge monitoring with person detection
-  - Track obstruction detection
-  - Unauthorized access monitoring
-  - Crowd density and flow analysis
+1. **Real-Time Object Detection**
+   - Swiftly detects hazards, unauthorized access, and unattended objects using YOLO11.
+2. **Contextual Understanding**
+   - Employs LLaMA 3.2 Vision for context-aware analysis, reducing false alarms and improving response accuracy.
+3. **Proactive Alerts**
+   - Notifies operators via audio, visual, and dashboard alerts for immediate action.
+4. **Scalability**
+   - Designed to support multiple camera feeds and scalable deployments.
 
-- 📊 **System Capabilities**
-  - Scalable multi-camera management
-  - Instant notification system
-  - Performance and incident analysis
-  - Context-aware decision support
+---
 
-## System Architecture
-
-#### Frontend (salama-app)
-
-- Framework: Next.js 14
-- State Management: Zustand
-- Real-time: Socket.io-client
-- UI Components: shadcn/ui
-- Styling: Tailwind CSS
-- Charts: Recharts
-- Type Safety: TypeScript
-
-#### Backend (salama-backend)
-
-- Framework: FastAPI
-- AI Processing: PyTorch, OpenCV
-- Queue System: Celery with Redis
-- WebSockets: FastAPI WebSockets
-- API Documentation: OpenAPI (Swagger)
-
-#### Database & Storage
-
-- Primary: PostgreSQL 16 + TimescaleDB
-- Cache: Redis
-- Search: Meilisearch
-- Object Storage: MinIO
-
-#### DevOps
-
-- Containerization: Docker
-- Orchestration: Kubernetes
-- CI/CD: GitHub Actions
-- Monitoring: Grafana + Prometheus
-- Logging: ELK Stack
-
-## Development Status
-
-The following features are currently under development:
-
-- Real-time camera feed integration
-- Alert notification system
-- Detection zone processing
-- Analytics dashboard
-- User authentication system
-
-Please note that some features may be partially implemented or may not work as expected. We recommend checking the project's issues and pull requests for the most up-to-date status of specific features.
-
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm
-- Python 3.8+
-- PostgreSQL database
-- Docker (optional)
+- **Node.js** 18+
+- **Python** 3.8+
+- **PostgreSQL** database
 
-### Frontend Setup
+### Deployment Steps
 
-1. Navigate to the frontend directory:
+1. **Clone the Repository**
 
-```bash
-cd salama-app
-```
+   ```bash
+   git clone https://github.com/yourusername/salama.git
+   cd salama
+   ```
 
-2. Install dependencies:
+2. **Backend Setup**
 
-```bash
-npm install
-```
+   - Navigate to the backend directory:
 
-3. Create a `.env.local` file:
+     ```bash
+     cd salama-backend
+     ```
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
+   - Create a virtual environment and activate it:
 
-4. Start the development server:
+     ```bash
+     python -m venv venv
+     source venv/bin/activate
+     ```
 
-```bash
-npm run dev
-```
+   - Install dependencies:
 
-The frontend will be available at http://localhost:3000
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-### Backend Setup
+   - Configure environment variables in `.env`:
 
-1. Navigate to the backend directory:
+     ```env
+     DATABASE_URL=postgresql://user:password@localhost/salama
+     ```
 
-```bash
-cd salama-backend
-```
+   - Start the backend server:
 
-2. Create a virtual environment and activate it:
+     ```bash
+     uvicorn app.main:app --reload
+     ```
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+3. **Frontend Setup**
 
-3. Install dependencies:
+   - Navigate to the frontend directory:
 
-```bash
-pip install -r requirements.txt
-```
+     ```bash
+     cd ../salama-app
+     ```
 
-4. Set up environment variables in `.env`:
+   - Install dependencies:
 
-```env
-DATABASE_URL=postgresql://user:password@localhost/salama
-```
+     ```bash
+     npm install
+     ```
 
-5. Start the backend server:
+   - Configure environment variables in `.env.local`:
 
-```bash
-uvicorn app.main:app --reload
-```
+     ```env
+     NEXT_PUBLIC_API_URL=http://localhost:8000
+     ```
 
-The backend API will be available at http://localhost:8000
+   - Start the development server:
 
-## Docker Deployment
+     ```bash
+     npm run dev
+     ```
 
-The project includes Docker support for easy deployment:
+   - Access the frontend at `http://localhost:3000`.
 
-1. Build and run using Docker Compose:
+---
 
-```bash
-docker-compose up --build
-```
+## 🌟 Get Involved
 
-This will start both frontend and backend services in containers.
+SALAMA is a collaborative project in its prototype stage, and we welcome contributions from the community. Here's how you can get involved:
 
-## API Documentation
+- **Star** this repository to show your support.
+- **Fork** the project to experiment and propose enhancements.
+- **Open Issues** for any bugs or feature suggestions.
+- **Collaborate** by submitting pull requests.
 
-Once the backend is running, you can access:
+Together, let's innovate and make railway systems safer through advanced AI technologies! 🚅
 
-- Swagger UI documentation: http://localhost:8000/docs
-- ReDoc documentation: http://localhost:8000/redoc
+---
 
-## Project Structure
-
-```
-salama/
-├── salama-app/               # Frontend application
-│   ├── src/
-│   │   ├── app/             # Next.js pages and routes
-│   │   ├── components/      # React components
-│   │   ├── hooks/          # Custom React hooks
-│   │   └── lib/            # Utility functions
-│   └── public/             # Static assets
-│
-└── salama-backend/          # Backend application
-    ├── app/
-    │   ├── api/            # API endpoints
-    │   ├── core/           # Core business logic
-    │   ├── models/         # Database models
-    │   └── schemas/        # Pydantic schemas
-    └── alembic/            # Database migrations
-```
-
-## Technical Documentation
-
-Detailed technical documentation is available in the `docs` directory:
-
-- [Technical Documentation](salama-app/docs/)
-- [Docker Setup Guide](salama-app/README.Docker.md)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
+## 📜 License
 
 This project is licensed under the Apache License, Version 2.0 - see the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) for details.
+
