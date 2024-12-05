@@ -6,7 +6,7 @@
 
 # [🔴 SALAMA] - Safety Assurance with Live AI Monitoring & Alerts 🚦🤖
 
-> **🚧 Development Status**: This is an early-stage prototype, and the code is not guaranteed to work. Currently, the functionality is limited to adding a camera, utilizing the **Camera Prompt** feature, and performing one detection cycle using YOLO11 and the LLaMA 3.2 Vision model through [OpenRouter](https://openrouter.ai/).  Most of the code has been AI-generated using [Cline](https://github.com/cline/cline), a powerful AI coding assistant. However, the generated code still requires polishing and refinement to ensure reliability and scalability. 🛠️ Contributions and feedback are welcome to help improve the project! 🚀
+> **🚧 Development Status**: This is an early-stage prototype, and the code is not guaranteed to work. Currently, the functionality is limited to adding a camera, utilizing the **Camera Prompt** feature, and performing one detection cycle using YOLO11 and the LLaMA 3.2 Vision model through [OpenRouter](https://openrouter.ai/).  Most of the code has been AI-generated using [Cline](https://github.com/cline/cline), the generated code still requires polishing and refinement to ensure reliability and scalability. 🛠️ Contributions and feedback are welcome to help improve the project! 🚀
 
 > **🏆 Award-Winning Innovation**: [2nd Prize Winner, TrainRail Hackathon Africa 2024 🌍](https://www.linkedin.com/posts/institut-de-formation-ferroviaire_the-trainrail-hackathon-africa-the-final-activity-7266778666125201410-ULww?utm_source=share&utm_medium=member_desktop)
 
