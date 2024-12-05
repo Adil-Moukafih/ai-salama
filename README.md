@@ -98,30 +98,29 @@ SALAMA is an AI Safety System designed to improve surveillance systems with inte
 
 SALAMA is a collaborative project in its prototype stage, and we welcome contributions from the community. Here's how you can get involved:
 
-- ⭐ **Star** this repository to show your support.  
-- 🍴 **Fork** the project to experiment and propose enhancements.  
-- 🐞 **Open Issues** for any bugs or feature suggestions.  
-- 🤝 **Collaborate** by submitting pull requests.
-  
-If you'd like to support our work, consider making a donation:
+- ⭐ **Star** this repository to show your support and help us grow.  
+- 🍴 **Fork** the project to experiment, innovate, and propose enhancements.  
+- ❤️ **Sponsor** the project to support our mission and sustain development.
+
+If you'd like to sponsor our work, click the button below:
 
 <p align="left">
-<a href="https://www.paypal.com/paypalme/AdilMoukafih">
-  <img src="Donate.png" alt="Donate with PayPal" width="250px" />
+<a href="https://github.com/sponsors/Adil-Moukafih">
+  <img src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-red?style=for-the-badge&logo=github" alt="Sponsor on GitHub" />
 </a>
 </p>
 
-We deeply appreciate the generosity of our supporters and donors! Your contributions make our mission possible.  
+We deeply appreciate the generosity of our sponsors! Your contributions make our mission possible.  
 
-**List of Donors and Supporters:**  
+---
 
+## **List of Sponsors and Supporters:**  
 - *Your Name Could Be Here!* - $[Amount]  
-- *Become a supporter and be featured in this list.*  
-- *Support us today to make a difference!* 🚀
+- *Join this list by becoming a sponsor today!*  
 
-*Want to see your name here? Donate today and support our efforts!* 🚀
+---
 
-Together, let's innovate and make railway systems safer through advanced AI technologies! 🚅
+Together, let's innovate and make railway systems safer through advanced AI technologies! 🚅  
 
 ---
 
