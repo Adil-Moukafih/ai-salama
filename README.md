@@ -10,7 +10,7 @@
 
 > **🏆 Award-Winning Innovation**: [2nd Prize Winner, TrainRail Hackathon Africa 2024 🌍](https://www.linkedin.com/posts/institut-de-formation-ferroviaire_the-trainrail-hackathon-africa-the-final-activity-7266778666125201410-ULww?utm_source=share&utm_medium=member_desktop)
 
-SALAMA is an AI project designed to improve surveillance systems with intelligent AI monitoring and alerts. By combining [YOLO11](https://github.com/ultralytics/ultralytics)'s fast detection capabilities with [LLaMA 3.2 Vision](https://ollama.com/blog/llama3.2-vision)'s contextual understanding, it aims to enhance railway safety by identifying risks in real-time and enabling proactive safety measures. Currently in its prototype phase, SALAMA represents a step towards smarter and safer railway operations.
+SALAMA is an AI Safety System designed to improve surveillance systems with intelligent AI monitoring and alerts. By combining [YOLO11](https://github.com/ultralytics/ultralytics)'s fast detection capabilities with [LLaMA 3.2 Vision](https://ollama.com/blog/llama3.2-vision)'s contextual understanding, it aims to enhance railway safety by identifying risks in real-time and enabling proactive safety measures. Currently in its prototype phase, SALAMA represents a step towards smarter and safer railway operations.
 
 ---
 
