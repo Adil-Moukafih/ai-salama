@@ -107,7 +107,7 @@ If you'd like to support our work, consider making a donation:
 
 <p align="left">
 <a href="https://www.paypal.com/paypalme/AdilMoukafih">
-  <img src="Donate.png" alt="Donate with PayPal" width="25%" />
+  <img src="Donate.png" alt="Donate with PayPal" width="250px" />
 </a>
 </p>
 
