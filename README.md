@@ -136,7 +136,7 @@ Our collaborative team played distinct roles in making the project a success:
 - **[Imane Kaab](https://www.linkedin.com/in/imane-kaab-577345146/):** Economic & Safety Impact Analyst
 - **[Fatine Bitar](https://www.linkedin.com/in/fatine-bitar-0a2001250/):** Presentation Lead (Speech and Delivery)
 - **[Youssef Bertal](https://www.linkedin.com/in/youssef-bertal-7a581b271/):** Backend and Data Flow Analyst
-- **[Oumaima Tayyarat](https://www.linkedin.com/in/oumaima-tayyarat-7766071b7/):** UI and Presentation Content Designer
+- **[Oumaima Tayyarat](https://www.linkedin.com/in/oumaima-tayyarat-7766071b7/):** Frontend and Presentation Content Designer
 
 ### Hackathon Coach  
 - **[Asmaa Benghabrit](https://www.linkedin.com/in/asmaa-benghabrit-013a05103/):** Associate Professor and Researcher in AI,
