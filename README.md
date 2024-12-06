@@ -27,7 +27,7 @@ SALAMA is an AI Safety System designed to improve surveillance systems with inte
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/salama.git
+   git clone https://github.com/ai-salama/ai-salama.git
    cd salama
    ```
 
