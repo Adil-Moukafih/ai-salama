@@ -139,7 +139,7 @@ Our collaborative team played distinct roles in making the project a success:
 - **[Oumaima Tayyarat](https://www.linkedin.com/in/oumaima-tayyarat-7766071b7/):** Frontend and Presentation Content Designer
 
 ### Hackathon Coach  
-- **[Asmaa Benghabrit](https://www.linkedin.com/in/asmaa-benghabrit-013a05103/):** Associate Professor and Researcher in AI,
+- **[Asmaa Benghabrit](https://www.linkedin.com/in/asmaa-benghabrit-013a05103/):** Associate Professor and Researcher in AI
 
 Together, we combined our skills and creativity to deliver an innovative solution for railway safety, standing out among the best in Africa. 🚅
 
