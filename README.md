@@ -132,7 +132,7 @@ Our team participated in the **African Regional Hackathon**, held at the **Insti
 
 Our collaborative team played distinct roles in making the project a success:
 
-- **[Adil Moukafih](https://www.linkedin.com/in/adel-moukafih-0997a8bb/):** Idea Initiator, Team Leader, and AI Integration Lead
+- **[Adel Moukafih](https://www.linkedin.com/in/adel-moukafih-0997a8bb/):** Idea Initiator, Team Leader, and AI Integration Lead
 - **[Imane Kaab](https://www.linkedin.com/in/imane-kaab-577345146/):** Economic & Safety Impact Analyst
 - **[Fatine Bitar](https://www.linkedin.com/in/fatine-bitar-0a2001250/):** Presentation Lead (Speech and Delivery)
 - **[Youssef Bertal](https://www.linkedin.com/in/youssef-bertal-7a581b271/):** Backend and Data Flow Analyst
